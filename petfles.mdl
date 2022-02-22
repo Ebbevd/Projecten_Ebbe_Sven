@@ -1,42 +1,44 @@
 {UTF-8}
-beschikbaarheid alternatieven  = A FUNCTION OF( )
+beschikbaarheid alternatieven=
+	10
 	~	
 	~		|
 
-consumptie inhoud petflessen  = A FUNCTION OF( recyclebaare petflessen)
-	~	
+consumptie inhoud petflessen=
+	100
+	~	Petfles/maand
 	~		|
 
-Petflessen consument  = A FUNCTION OF( beschikbaarheid alternatieven,-consumptie inhoud petflessen\
-		,verkoop petflessen) ~~|
+recycling petflessen=
+	100
+	~	Petfles/maand
+	~		|
+
+recyclebaarheid plastic=
+	0,8
+	~	Dmnl
+	~		|
+
+productie petflessen=
+	100+recycling petflessen
+	~	Petfles/maand
+	~		|
+
+verkoop petflessen=
+	0.8*productie petflessen
+	~	Petfles
+	~		|
+
 Petflessen consument= INTEG (
-	,
-		)
-	~	
+	verkoop petflessen-beschikbaarheid alternatieven-consumptie inhoud petflessen,
+		10000)
+	~	Petfles
 	~		|
 
-productie petflessen  = A FUNCTION OF( recycling petflessen)
-	~	
-	~		|
-
-recyclebaare petflessen  = A FUNCTION OF( consumptie inhoud petflessen,recyclebaarheid plastic\
-		,-recycling petflessen) ~~|
 recyclebaare petflessen= INTEG (
-	,
-		)
-	~	
-	~		|
-
-recyclebaarheid plastic  = A FUNCTION OF( )
-	~	
-	~		|
-
-recycling petflessen  = A FUNCTION OF( )
-	~	
-	~		|
-
-verkoop petflessen  = A FUNCTION OF( productie petflessen)
-	~	
+	consumptie inhoud petflessen-(recycling petflessen*recyclebaarheid plastic),
+		100)
+	~	Petfles
 	~		|
 
 ********************************************************
@@ -56,7 +58,7 @@ INITIAL TIME  = 0
 	|
 
 SAVEPER  = 
-        TIME STEP 
+        TIME STEP
 	~	Month [0,?]
 	~	The frequency with which output is stored.
 	|
@@ -70,35 +72,36 @@ TIME STEP  = 1
 V300  Do not put anything below this section - it will be ignored
 *View 1
 $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,100,0
-10,1,Petflessen consument,1064,602,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,2,recyclebaare petflessen,1333,599,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
-12,6,48,1550,594,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
-10,10,verkoop petflessen,861,745,59,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,11,10,1,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(962,694)|
-10,12,beschikbaarheid alternatieven,805,645,52,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,13,12,1,1,0,45,0,2,128,0,-1--1--1,|0||-1--1--1,1|(928,576)|
-10,14,productie petflessen,501,837,32,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,15,14,10,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(775,861)|
-1,17,19,2,4,0,0,22,0,0,0,-1--1--1,,1|(1248,600)|
-1,18,19,1,100,0,0,22,0,0,0,-1--1--1,,1|(1148,600)|
-11,19,0,1198,600,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,20,consumptie inhoud petflessen,1198,627,59,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,23,25,6,4,0,0,22,0,0,0,-1--1--1,,1|(1501,594)|
-1,24,25,2,100,0,0,22,0,0,0,-1--1--1,,1|(1411,594)|
-11,25,0,1456,594,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,26,recycling petflessen,1456,621,32,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,27,25,14,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(745,414)|
-1,29,2,19,1,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(1227,528)|
-10,30,recyclebaarheid plastic,1265,734,50,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,31,30,2,0,0,43,0,2,128,0,-1--1--1,|0||-1--1--1,1|(1294,673)|
+10,1,Petflessen consument,680,314,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,recyclebaare petflessen,949,311,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,3,48,1166,306,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,4,verkoop petflessen,477,457,59,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,5,4,1,1,0,43,0,2,128,0,-1--1--1,|12||0-0-0,1|(578,406)|
+10,6,beschikbaarheid alternatieven,421,357,52,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,7,6,1,1,0,45,0,2,128,0,-1--1--1,|12||0-0-0,1|(544,288)|
+10,8,productie petflessen,117,549,32,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,9,8,4,1,0,43,0,2,128,0,-1--1--1,|12||0-0-0,1|(391,573)|
+1,10,12,2,4,0,0,22,0,0,0,-1--1--1,,1|(864,312)|
+1,11,12,1,100,0,0,22,0,0,0,-1--1--1,,1|(764,312)|
+11,12,200,814,312,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,13,consumptie inhoud petflessen,814,339,59,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,14,16,3,4,0,0,22,0,0,0,-1--1--1,,1|(1117,306)|
+1,15,16,2,100,0,0,22,0,0,0,-1--1--1,,1|(1027,306)|
+11,16,288,1072,306,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,17,recycling petflessen,1072,333,32,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,18,16,8,1,0,43,0,2,128,0,-1--1--1,|12||0-0-0,1|(361,126)|
+10,20,recyclebaarheid plastic,881,446,50,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,21,20,2,0,0,43,0,2,128,0,-1--1--1,|12||0-0-0,1|(910,385)|
 ///---\\\
 :L<%^E!@
-5:FINAL TIME
+1:current.vdfx
+4:Time
+5:Petflessen consument
 9:current
 19:100,0
 24:0
-25:0
-26:0
+25:100
+26:100
 15:0,0,0,0,0,0
 27:0,
 34:0,
