@@ -1,17 +1,38 @@
 {UTF-8}
-Verandering in de vraag=
-	1+(Statiegeld consument/Totale kosten dranken)
+Verandering in vraag=
+	1+(Statiegeld consument/Totale opbrengsten)
 	~	Dmnl
 	~		|
 
+Statiegeld consument= INTEG (
+	Statiegeld-Uigaven,
+		0)
+	~	Million*Euro
+	~		|
+
 Opbrengsten verkopen dranken=
-	(Aantal verkochten dranken*Gemiddelde kosten fles drank)*Verandering in de vraag
+	(Aantal verkochten dranken*Gemiddelde kosten fles drank)*Verandering in vraag
 	~	Million*Euro/Month
 	~		|
 
-Totale kosten dranken=
+Aantal verkochten dranken=
+	900
+	~	Million/Month
+	~		|
+
+Uigaven=
+	Statiegeld consument*Percentage statiegeld terug in Economie
+	~	Million*Euro
+	~		|
+
+Totale opbrengsten=
 	Aantal verkochten dranken*Gemiddelde kosten fles drank
-	~	Million*Euro/Month
+	~	Million*Euro
+	~		|
+
+Percentage statiegeld terug in Economie=
+	0.7
+	~	Dmnl
 	~		|
 
 Aantal grote flessen gerycycled=
@@ -26,11 +47,6 @@ Aantal kleine flessen gerycycled=
 
 Aantal plastic flessen gerycycled=
 	800
-	~	Million/Month
-	~		|
-
-Aantal verkochten dranken=
-	900
 	~	Million/Month
 	~		|
 
@@ -67,7 +83,7 @@ Opbrengsten per fles=
 	~		|
 
 Opbrengsten recyclen=
-	DELAY3(Aantal plastic flessen gerycycled*Opbrengsten per fles , Tijdsduur recyclen van plastic\
+	DELAY3((Aantal plastic flessen gerycycled*Opbrengsten per fles) , Tijdsduur recyclen van plastic\
 		)
 	~	Million*Euro/Month
 	~		|
@@ -76,12 +92,6 @@ Statiegeld=
 	(Opbrengste statiegeld grote fles*Aantal grote flessen gerycycled)+(Opbrengste statiegeld kleine fles\
 		*Aantal kleine flessen gerycycled)
 	~	Million*Euro/Month
-	~		|
-
-Statiegeld consument= INTEG (
-	Statiegeld,
-		0)
-	~	Million*Euro
 	~		|
 
 Tijdsduur recyclen van plastic=
@@ -120,52 +130,60 @@ TIME STEP  = 1
 V300  Do not put anything below this section - it will be ignored
 *View 1
 $192-192-192,0,Arial Unicode MS|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,100,0
-10,1,Statiegeld consument,469,76,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,2,Geld supermarkt,207,70,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,3,Geld voor plastic flessen,210,351,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,4,6,2,4,0,0,22,0,0,0,-1--1--1,,1|(215,142)|
-1,5,6,3,100,0,0,22,0,0,0,-1--1--1,,1|(215,268)|
-11,6,398,215,200,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
-10,7,Opbrengsten recyclen,260,200,37,16,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,8,10,1,4,0,0,22,0,0,0,-1--1--1,,1|(388,67)|
-1,9,10,2,100,0,0,22,0,0,0,-1--1--1,,1|(291,67)|
-11,10,332,342,67,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,11,Statiegeld,342,84,29,9,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-12,12,48,420,363,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
-1,13,15,3,4,0,0,22,0,0,0,-1--1--1,,1|(287,363)|
-1,14,15,12,100,0,0,22,0,0,0,-1--1--1,,1|(373,363)|
-11,15,48,330,363,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
-10,16,Opbrengsten verkopen dranken,330,387,51,16,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
-10,17,Aantal plastic flessen gerycycled,425,189,52,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,18,Opbrengsten per fles,380,272,58,9,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,19,17,7,1,0,0,0,0,128,0,-1--1--1,,1|(335,174)|
-1,20,18,7,1,0,0,0,0,128,0,-1--1--1,,1|(317,253)|
-10,21,Gemiddelde kosten fles drank,316,486,55,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,22,21,16,1,0,0,0,0,128,0,-1--1--1,,1|(316,437)|
-10,23,Opbrengste statiegeld grote fles,374,141,55,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,24,Opbrengste statiegeld kleine fles,333,-15,57,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,25,23,11,1,0,0,0,0,128,0,-1--1--1,,1|(354,118)|
-1,26,24,11,1,0,0,0,0,128,0,-1--1--1,,1|(316,28)|
-10,27,Aantal grote flessen gerycycled,570,9,56,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,28,Aantal kleine flessen gerycycled,473,-54,58,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-10,29,Tijdsduur recyclen van plastic,72,211,52,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,30,29,7,1,0,0,0,0,128,0,-1--1--1,,1|(163,231)|
-1,31,27,11,1,0,0,0,0,128,0,-1--1--1,,1|(451,26)|
-1,32,28,11,1,0,0,0,0,128,0,-1--1--1,,1|(402,2)|
-10,33,Aantal verkochten dranken,184,499,51,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,34,33,16,1,0,0,0,0,128,0,-1--1--1,,1|(223,427)|
-10,35,Verandering in de vraag,548,241,50,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,37,35,16,1,0,0,0,0,128,0,-1--1--1,,1|(469,327)|
-10,39,Totale kosten dranken,512,394,39,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,40,21,39,1,0,0,0,0,128,0,-1--1--1,,1|(402,419)|
-1,41,33,39,1,0,0,0,0,128,0,-1--1--1,,1|(376,529)|
-1,42,39,35,1,0,0,0,0,128,0,-1--1--1,,1|(552,323)|
-1,44,1,35,1,0,0,0,0,128,0,-1--1--1,,1|(483,161)|
+10,1,Statiegeld consument,469,92,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Geld supermarkt,207,86,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,3,Geld voor plastic flessen,210,367,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,4,6,2,4,0,0,22,0,0,0,-1--1--1,,1|(215,158)|
+1,5,6,3,100,0,0,22,0,0,0,-1--1--1,,1|(215,284)|
+11,6,552,215,216,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,7,Opbrengsten recyclen,260,216,37,16,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,8,10,1,4,0,0,22,0,0,0,-1--1--1,,1|(388,83)|
+1,9,10,2,100,0,0,22,0,0,0,-1--1--1,,1|(291,83)|
+11,10,508,342,83,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,11,Statiegeld,342,100,29,9,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,12,48,420,379,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,13,15,3,4,0,0,22,0,0,0,-1--1--1,,1|(287,379)|
+1,14,15,12,100,0,0,22,0,0,0,-1--1--1,,1|(373,379)|
+11,15,48,330,379,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,16,Opbrengsten verkopen dranken,330,403,51,16,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,17,Aantal plastic flessen gerycycled,425,205,52,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,18,Opbrengsten per fles,380,288,58,9,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,19,17,7,1,0,0,0,0,128,0,-1--1--1,,1|(335,190)|
+1,20,18,7,1,0,0,0,0,128,0,-1--1--1,,1|(317,269)|
+10,21,Gemiddelde kosten fles drank,320,500,55,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,22,21,16,1,0,0,0,0,128,0,-1--1--1,,1|(319,452)|
+10,23,Opbrengste statiegeld grote fles,374,157,55,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,24,Opbrengste statiegeld kleine fles,333,1,57,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,25,23,11,1,0,0,0,0,128,0,-1--1--1,,1|(354,134)|
+1,26,24,11,1,0,0,0,0,128,0,-1--1--1,,1|(316,44)|
+10,27,Aantal grote flessen gerycycled,570,25,56,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,28,Aantal kleine flessen gerycycled,473,-38,58,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,29,Tijdsduur recyclen van plastic,72,227,52,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,30,29,7,1,0,0,0,0,128,0,-1--1--1,,1|(163,247)|
+1,31,27,11,1,0,0,0,0,128,0,-1--1--1,,1|(451,42)|
+1,32,28,11,1,0,0,0,0,128,0,-1--1--1,,1|(402,18)|
+10,33,Aantal verkochten dranken,460,456,51,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,34,33,16,1,0,0,0,0,128,0,-1--1--1,,1|(400,453)|
+12,47,48,693,90,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,49,51,47,4,0,0,22,0,0,0,-1--1--1,,1|(642,90)|
+1,50,51,1,100,0,0,22,0,0,0,-1--1--1,,1|(549,90)|
+11,51,0,596,90,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,52,Uigaven,596,107,24,9,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,54,Verandering in vraag,591,257,58,9,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,55,1,54,1,0,0,0,0,128,0,-1--1--1,,1|(560,166)|
+1,57,54,16,1,0,0,0,0,128,0,-1--1--1,,1|(506,365)|
+10,58,Percentage statiegeld terug in Economie,697,175,61,16,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,60,58,52,1,0,0,0,0,128,0,-1--1--1,,1|(624,151)|
+1,61,1,52,1,0,0,0,0,128,0,-1--1--1,,1|(530,109)|
+10,62,Totale opbrengsten,584,411,54,9,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,63,62,54,1,0,0,0,0,128,0,-1--1--1,,1|(618,335)|
+1,64,33,62,1,0,0,0,0,128,0,-1--1--1,,1|(531,440)|
+1,65,21,62,1,0,0,0,0,128,0,-1--1--1,,1|(507,501)|
 ///---\\\
 :L<%^E!@
 1:current.vdfx
 4:Time
-5:Geld voor plastic flessen
+5:Geld supermarkt
 9:current
 19:100,0
 24:0
