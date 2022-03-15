@@ -1,0 +1,202 @@
+{UTF-8}
+afbreken plastic fles=
+	DELAY1( Recyclebaar plastic , tijd afbreken plastic)
+	~	
+	~		|
+
+hoeveelheid fossiele brandstof beschikbaar=
+	100
+	~	
+	~		|
+
+hoeveelheid geproduceerde flessen per kilo=
+	4e-05
+	~	
+	~	https://faq-ans.com/en/Q%26A/page=0b850142440ff2017f87a737c7a343d1#s0
+	|
+
+Maken en vormen fles=
+	DELAY1(Plastic korrels, tijd maken fles )
+	~	
+	~		|
+
+Plastic fles= INTEG (
+	Maken en vormen fles*hoeveelheid geproduceerde flessen per kilo-verkoop fles,
+		100)
+	~	
+	~		|
+
+plastic in=
+	110
+	~	
+	~		|
+
+Plastic korrels= INTEG (
+	afbreken plastic fles+synthetiseren fossiele brandstoffen-Maken en vormen fles,
+		100)
+	~	Kg
+	~		|
+
+Recyclebaar plastic= INTEG (
+	plastic in-afbreken plastic fles,
+		100)
+	~	
+	~		|
+
+synthetiseren fossiele brandstoffen=
+	DELAY1( hoeveelheid fossiele brandstof beschikbaar*vraag plastic , tijd maken plastic korrels\
+		 )
+	~	
+	~		|
+
+tijd afbreken plastic=
+	7
+	~	weeks
+	~		|
+
+tijd maken fles=
+	1
+	~	dag
+	~		|
+
+tijd maken plastic korrels=
+	5
+	~	week
+	~		|
+
+verkoop fles=
+	DELAY1(Plastic fles*verkoopcijfers, verkooptijd )
+	~	
+	~		|
+
+verkoopcijfers=
+	1
+	~	
+	~		|
+
+verkooptijd=
+	2
+	~	maand
+	~		|
+
+vraag plastic=
+	0.8
+	~	
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 100
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP 
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 1
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Arial Unicode MS|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,100,0
+10,1,Plastic fles,318,114,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Plastic korrels,323,256,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,3,48,322,359,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,5,7,2,4,0,0,22,0,0,0,-1--1--1,,1|(322,291)|
+1,6,7,3,100,0,0,22,0,0,0,-1--1--1,,1|(322,335)|
+11,7,0,322,313,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,8,synthetiseren fossiele brandstoffen,406,313,76,18,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,10,12,1,4,0,0,22,0,0,0,-1--1--1,,1|(320,156)|
+1,11,12,2,100,0,0,22,0,0,0,-1--1--1,,1|(320,213)|
+11,12,0,320,185,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,13,Maken en vormen fles,370,185,42,18,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,20,48,749,112,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,22,24,20,4,0,0,22,0,0,0,-1--1--1,,1|(715,112)|
+11,24,0,685,112,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,25,verkoop fles,685,138,44,10,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,26,Recyclebaar plastic,121,251,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,28,30,2,4,0,0,22,0,0,0,-1--1--1,,1|(255,253)|
+1,29,30,26,100,0,0,22,0,0,0,-1--1--1,,1|(188,253)|
+11,30,0,222,253,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,31,afbreken plastic fles,222,279,39,18,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,32,hoeveelheid fossiele brandstof beschikbaar,450,425,82,18,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,34,32,7,1,0,0,0,0,128,0,-1--1--1,,1|(343,376)|
+10,35,vraag plastic,567,391,46,10,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,36,35,7,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,37,hoeveelheid geproduceerde flessen per kilo,138,100,57,27,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,38,37,1,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,40,24,1,100,0,0,22,0,0,0,-1--1--1,,1|(518,112)|
+10,41,verkoopcijfers,668,239,51,10,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,42,41,25,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+12,48,48,172,-25,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,49,39,26,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,50,tijd afbreken plastic,149,333,45,18,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,51,50,31,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,52,26,30,1,0,0,0,0,128,0,-1--1--1,,1|(200,214)|
+10,53,tijd maken plastic korrels,247,380,51,18,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,54,53,7,1,0,0,0,0,128,0,-1--1--1,,1|(313,314)|
+10,55,tijd maken fles,505,211,52,10,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,56,55,13,1,0,0,0,0,128,0,-1--1--1,,1|(470,166)|
+1,57,2,13,1,0,0,0,0,128,0,-1--1--1,,1|(420,236)|
+12,58,48,33,257,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,60,62,26,4,0,0,22,0,0,0,-1--1--1,,1|(74,257)|
+1,61,62,58,100,0,0,22,0,0,0,-1--1--1,,1|(49,257)|
+11,62,0,62,257,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,63,plastic in,62,275,33,10,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,64,1,25,1,0,0,0,0,128,0,-1--1--1,,1|(593,61)|
+10,65,verkooptijd,677,27,40,10,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,66,65,24,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+///---\\\
+:L<%^E!@
+1:current.vdfx
+4:Time
+5:Maken en vormen fles
+9:current
+19:100,0
+24:0
+25:100
+26:100
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:0
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
