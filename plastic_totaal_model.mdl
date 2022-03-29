@@ -1,0 +1,536 @@
+{UTF-8}
+aantal flessen geproduceerd uit plastic=
+	7.5e+07
+	~	Fles/Month
+	~		|
+
+Plastic korrels= INTEG (
+	afbreken plastic fles+synthese nieuw plastic,
+		158333)
+	~	Ton
+	~		|
+
+Recycelen=
+	DELAY3(verkoop fles*Percentage wat gerycycled word*levensduur flessen, Gemiddelde tijd recyclen van plastic flesjes
+	 )
+	~	Fles/Month
+	~		|
+
+Recyclebaar plastic= INTEG (
+	plastic in-afbreken plastic fles,
+		gerecycled plastic per maand)
+	~	Ton/Month
+	~		|
+
+plastic flessen geproduceerd=
+	MIN((Plastic korrels*hoeveelheid geproduceerde flessen per ton plastic/Doorlooptijd maken plastic fles\
+		),aantal flessen geproduceerd uit plastic)
+	~	Fles/Month
+	~		|
+
+afbreken plastic fles=
+	DELAY3( Recyclebaar plastic , Gemiddelde tijd recyclen van plastic flesjes)
+	~	Ton/Month
+	~		|
+
+Doorlooptijd maken plastic fles=
+	1
+	~	Month
+	~		|
+
+Plastic fles= INTEG (
+	plastic flessen geproduceerd-verkoop fles,
+		7.5e+07)
+	~	Fles
+	~		|
+
+gerecycled plastic per maand=
+	20250
+	~	Ton/Month
+	~	https://ce.nl/publicaties/plasticgebruik-en-verwerking-van-plastic-afval-in\
+		-nederland/#: \
+		:text=In%202017%20is%20ongeveer%201.900,gerecycled%20(47%2C5%25).
+	|
+
+plastic in=
+	20250
+	~	Ton/Month
+	~		|
+
+synthese nieuw plastic=
+	DELAY3(Verandering in vraag*vraag nieuw plastic, Gemiddelde tijd recyclen van plastic flesjes\
+		 )
+	~	Ton/Month
+	~		|
+
+vraag nieuw plastic=
+	158333
+	~	Ton/Month
+	~	https://ce.nl/publicaties/plasticgebruik-en-verwerking-van-plastic-afval-in\
+		-nederland/#: \
+		:text=In%202017%20is%20ongeveer%201.900,gerecycled%20(47%2C5%25).
+	|
+
+Percentage wat gerycycled word= WITH LOOKUP (
+	Time,
+		([(2000,0)-(2050,1)],(2000,0),(2050,1) ))
+	~	Dmnl/Month
+	~	https://ce.nl/publicaties/plasticgebruik-en-verwerking-van-plastic-afval-in\
+		-nederland/
+	|
+
+Opbrengsten recyclen=
+	DELAY3(Statiegeld+(Aantal plastic flessen gerycycled*Opbrengsten per fles) , Gemiddelde tijd recyclen van plastic flesjes\
+		)
+	~	Euro/Month
+	~		|
+
+Aantal verkochten dranken= ACTIVE INITIAL (
+	verkoop fles,
+		7.5e+07)
+	~	Fles/Month
+	~		|
+
+gerycyclede flessen=
+	Gewicht plastic fles*Hergebruik flessen
+	~	Ton/Month
+	~		|
+
+Verandering in vraag= WITH LOOKUP (
+	Time,
+		([(0,0)-(2050,10)],(2000,1),(2050,1.2) ))
+	~	Dmnl
+	~	Nu als verhouding statiegeld en kosten, weet niet of dit mag worden \
+		aangenomen.
+	|
+
+Verkoopcijfers= WITH LOOKUP (
+	Time,
+		([(0,0)-(2050,10)],(2000,1),(2050,1.2) ))
+	~	Dmnl
+	~		|
+
+Plastic flessen consument of milieu= INTEG (
+	verkoop fles-Recycelen,
+		7.5e+07)
+	~	Fles
+	~		|
+
+verkoop fles=
+	DELAY3(Plastic fles*Verkoopcijfers, verkooptijd )
+	~	Fles/Month
+	~		|
+
+Statiegeld=
+	(Opbrengste statiegeld grote fles*Aantal grote flessen gerycycled)+(Opbrengste statiegeld kleine fles\
+		*Aantal kleine flessen gerycycled
+	)
+	~	Euro/Month
+	~		|
+
+Aantal kleine flessen gerycycled=
+	2e+07
+	~	Fles/Month
+	~		|
+
+Aantal grote flessen gerycycled=
+	5e+07
+	~	Fles/Month
+	~		|
+
+Aantal plastic flessen gerycycled=
+	7e+07
+	~	Fles/Month
+	~		|
+
+Geld supermarkt= INTEG (
+	Opbrengsten recyclen-Statiegeld,
+		0)
+	~	Euro
+	~		|
+
+Gemiddelde kosten fles drinken=
+	2
+	~	Euro/Fles
+	~	https://www.ah.nl/producten/frisdrank-sappen-koffie-thee/frisdrank
+	|
+
+Gemiddelde kosten maken drinken=
+	1.44
+	~	Euro/Fles
+	~	https://www.macrotrends.net/stocks/charts/KO/cocacola/profit-margins
+	|
+
+Plastic korrels 0= INTEG (
+	Omsmelten,
+		0)
+	~	Ton
+	~		|
+
+Gewicht plastic fles=
+	4e-05
+	~	Ton/Fles
+	~	https://faq-ans.com/en/Q%26A/page=0b850142440ff2017f87a737c7a343d1#s0
+	|
+
+hoeveelheid geproduceerde flessen per ton plastic=
+	30000
+	~	Fles/Ton
+	~	https://faq-ans.com/en/Q%26A/page=0b850142440ff2017f87a737c7a343d1#s0
+	|
+
+Hoeveelheid overig afval=
+	Totale hoeveelheid afval-gerycyclede flessen
+	~	Ton/Month
+	~		|
+
+Kosten maken dranken=
+	Aantal verkochten dranken*Gemiddelde kosten maken drinken
+	~	Euro/Month
+	~		|
+
+Totale hoeveelheid afval=
+	158333
+	~	Ton/Month
+	~	https://ce.nl/publicaties/plasticgebruik-en-verwerking-van-plastic-afval-in-nederland\
+		/
+		
+		1900 kiloton
+	|
+
+Omsmelten=
+	Percentage wat gerycycled word*Plastic afval
+	~	Ton/Month
+	~	Percentage wat gerycycled word*Plastic afval
+	|
+
+Omzet drank in plastic flessen= INTEG (
+	Opbrengsten verkopen dranken-Kosten maken dranken-Opbrengsten recyclen,
+		0)
+	~	Euro
+	~		|
+
+Opbrengste statiegeld grote fles=
+	0.25
+	~	Euro/Fles
+	~	https://www.rijksoverheid.nl/actueel/nieuws/2020/04/24/statiegeld-op-kleine\
+		-plastic-flesjes-voor-minder-zwerfafval
+	|
+
+Opbrengste statiegeld kleine fles=
+	0.15
+	~	Euro/Fles
+	~	https://www.rijksoverheid.nl/actueel/nieuws/2020/04/24/statiegeld-op-kleine\
+		-plastic-flesjes-voor-minder-zwerfafval
+	|
+
+Opbrengsten per fles=
+	0.0209
+	~	Euro/Fles
+	~	https://recyclingnetwerk.org/themas/statiegeld/hoe-werkt-statiegeld/#: \
+		:text=Voor%20ieder%20blikje%20dat%20supermarkten,de%20kosten%20die%20ze%20m\
+		aken
+	|
+
+Opbrengsten per maand=
+	Aantal verkochten dranken*Gemiddelde kosten fles drinken
+	~	Euro/Month
+	~		|
+
+Opbrengsten verkopen dranken=
+	(Aantal verkochten dranken*Gemiddelde kosten fles drinken)*Verandering in vraag
+	~	Euro/Month
+	~		|
+
+Overig plastic afval=
+	Hoeveelheid overig afval
+	~	Ton/Month
+	~		|
+
+Percentage statiegeld terug in Economie=
+	0.935
+	~	Dmnl/Month
+	~	https://www.hypotheek.nl/nieuws/geld/hoeveel-sparen-per-maand/#: \
+		:text=Mensen%20die%20structureel%20geld%20opzij,van%20wat%20ze%20netto%20ve\
+		rdienen.
+	|
+
+Plastic afval= INTEG (
+	gerycyclede flessen+Overig plastic afval-Omsmelten,
+		100000)
+	~	Ton
+	~		|
+
+Statiegeld consument= INTEG (
+	Statiegeld-Uigaven statiegeld,
+		0)
+	~	Euro
+	~		|
+
+Uigaven statiegeld=
+	Statiegeld consument*Percentage statiegeld terug in Economie
+	~	Euro/Month
+	~		|
+
+verkooptijd=
+	0.25
+	~	Month
+	~		|
+
+Doorlooptijd plastic flessen=
+	1
+	~	Month
+	~		|
+
+Hergebruik flessen=
+	Gerecyclede plastic flessen/Doorlooptijd plastic flessen
+	~	Fles/Month
+	~		|
+
+Gemiddelde tijd recyclen van plastic flesjes=
+	1.75
+	~	Month
+	~	https://wikikids.nl/Recyclen
+		
+		even kijken of we betere bronnen kunnen vinden
+	|
+
+Gerecyclede plastic flessen= INTEG (
+	Recycelen-Hergebruik flessen,
+		Recycelen)
+	~	Fles
+	~		|
+
+levensduur flessen=
+	5/6
+	~	Dmnl
+	~	https://www.plasticsoupfoundation.org/2017/08/eindeloos-pet-recyclen-met-ioniqa-techn\
+		ologie/
+		
+		"na 6 of 7 keer kan PET niet meer worden gerecycled"
+	|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 2050
+	~	Month
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 2000
+	~	Month
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Month [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.125
+	~	Month [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,96,70,0
+10,1,Plastic flessen consument of milieu,844,556,54,25,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+10,2,Gerecyclede plastic flessen,1113,562,48,22,3,131,0,0,0,0,0,0,0,0,0,0,0,0
+1,3,5,2,4,0,0,22,0,0,0,-1--1--1,,1|(1020,560)|
+1,4,5,1,100,0,0,22,0,0,0,-1--1--1,,1|(931,560)|
+11,5,0,970,560,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,6,Recycelen,970,579,33,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,7,levensduur flessen,910,444,56,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,9,7,6,1,0,0,0,0,128,0,-1--1--1,,1|(922,505)|
+10,11,Gemiddelde tijd recyclen van plastic flesjes,553,702,62,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,12,11,6,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+12,13,48,1353,559,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,14,16,13,4,0,0,22,0,0,0,-1--1--1,,1|(1300,559)|
+1,15,16,2,100,0,0,22,0,0,0,-1--1--1,,1|(1203,559)|
+11,16,0,1252,559,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,17,Hergebruik flessen,1252,578,58,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,18,Doorlooptijd plastic flessen,1378,659,22,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,19,18,17,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,20,2,17,1,0,0,0,0,128,0,-1--1--1,,1|(1169,601)|
+10,21,Plastic fles,339,113,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,22,Plastic korrels,344,255,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+11,27,0,706,111,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,28,verkoop fles,706,137,40,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,29,Recyclebaar plastic,142,250,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,30,32,22,4,0,0,22,0,0,0,-1--1--1,,1|(276,252)|
+1,31,32,29,100,0,0,22,0,0,0,-1--1--1,,1|(209,252)|
+11,32,0,243,252,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,33,afbreken plastic fles,243,278,50,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,34,hoeveelheid geproduceerde flessen per ton plastic,60,110,71,28,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,35,27,21,100,0,0,22,0,0,0,-1--1--1,,1|(539,111)|
+1,38,29,32,1,0,0,0,0,128,0,-1--1--1,,1|(221,213)|
+12,42,48,54,256,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,43,45,29,4,0,0,22,0,0,0,-1--1--1,,1|(95,256)|
+1,44,45,42,100,0,0,22,0,0,0,-1--1--1,,1|(70,256)|
+11,45,0,83,256,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,46,plastic in,83,274,28,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,47,21,28,1,0,0,0,0,128,0,-1--1--1,,1|(614,60)|
+10,48,verkooptijd,698,26,37,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,49,48,27,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,50,Plastic afval,1180,116,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,51,Plastic korrels 0,1447,113,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,52,54,51,4,0,0,22,0,0,0,-1--1--1,,1|(1363,114)|
+1,53,54,50,100,0,0,22,0,0,0,-1--1--1,,1|(1263,114)|
+11,54,0,1313,114,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,55,Omsmelten,1313,131,36,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,56,48,1183,236,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,57,59,50,4,0,0,22,0,0,0,-1--1--1,,1|(1183,156)|
+1,58,59,56,100,0,0,22,0,0,0,-1--1--1,,1|(1183,208)|
+11,59,0,1183,182,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,60,gerycyclede flessen,1246,182,39,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,61,Gewicht plastic fles,1275,298,49,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,62,61,60,1,0,0,0,0,128,0,-1--1--1,,1|(1247,247)|
+12,63,48,1013,115,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,64,66,50,4,0,0,22,0,0,0,-1--1--1,,1|(1113,115)|
+1,65,66,63,100,0,0,22,0,0,0,-1--1--1,,1|(1049,115)|
+11,66,0,1081,115,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,67,Overig plastic afval,1081,132,60,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,68,Hoeveelheid overig afval,1040,207,40,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,69,60,68,1,0,0,0,0,128,0,-1--1--1,,1|(1137,204)|
+1,70,68,67,1,0,0,0,0,128,0,-1--1--1,,1|(1043,169)|
+10,71,Percentage wat gerycycled word,1280,37,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,72,Totale hoeveelheid afval,1051,297,55,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,73,72,68,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,74,50,55,1,0,0,0,0,128,0,-1--1--1,,1|(1245,154)|
+1,75,71,55,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,76,Statiegeld consument,115,757,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,77,Geld supermarkt,-147,751,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,78,Omzet drank in plastic flessen,-144,1032,40,20,3,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,79,81,77,4,0,0,22,0,0,0,-1--1--1,,1|(-139,823)|
+1,80,81,78,100,0,0,22,0,0,0,-1--1--1,,1|(-139,949)|
+11,81,0,-139,881,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,82,Opbrengsten recyclen,-94,881,42,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,83,85,76,4,0,0,22,0,0,0,-1--1--1,,1|(34,748)|
+1,84,85,77,100,0,0,22,0,0,0,-1--1--1,,1|(-63,748)|
+11,85,0,-12,748,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,86,Statiegeld,-12,765,32,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,87,48,66,1044,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,88,90,78,4,0,0,22,0,0,0,-1--1--1,,1|(-67,1044)|
+1,89,90,87,100,0,0,22,0,0,0,-1--1--1,,1|(19,1044)|
+11,90,0,-24,1044,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,91,Opbrengsten verkopen dranken,-24,1068,58,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,92,Aantal plastic flessen gerycycled,176,903,66,19,8,131,0,2,0,0,0,0,-1--1--1,0-0-0,|||255-255-255,0,0,0,0,0,0
+10,93,Opbrengsten per fles,26,953,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,94,92,82,1,0,0,0,0,128,0,-1--1--1,,1|(-5,854)|
+1,95,93,82,1,0,0,0,0,128,0,-1--1--1,,1|(-37,934)|
+10,96,Gemiddelde kosten fles drinken,34,1182,62,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,97,96,91,1,0,0,0,0,128,0,-1--1--1,,1|(-3,1131)|
+10,98,Opbrengste statiegeld grote fles,20,822,61,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,99,Opbrengste statiegeld kleine fles,-21,666,63,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,100,98,86,1,0,0,0,0,128,0,-1--1--1,,1|(0,799)|
+1,101,99,86,1,0,0,0,0,128,0,-1--1--1,,1|(-38,709)|
+10,102,Aantal grote flessen gerycycled,216,690,62,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,103,102,86,1,0,0,0,0,128,0,-1--1--1,,1|(97,707)|
+10,104,Aantal verkochten dranken,106,1121,58,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,105,104,91,1,0,0,0,0,128,0,-1--1--1,,1|(46,1118)|
+12,106,48,339,755,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,107,109,106,4,0,0,22,0,0,0,-1--1--1,,1|(288,755)|
+1,108,109,76,100,0,0,22,0,0,0,-1--1--1,,1|(195,755)|
+11,109,0,242,755,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,110,Uigaven statiegeld,242,772,57,11,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,111,Verandering in vraag,248,985,47,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,112,111,91,1,0,0,0,0,128,0,-1--1--1,,1|(147,1066)|
+10,113,Percentage statiegeld terug in Economie,343,840,67,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,114,113,110,1,0,0,0,0,128,0,-1--1--1,,1|(270,816)|
+1,115,76,110,1,0,0,0,0,128,0,-1--1--1,,1|(176,774)|
+10,116,Opbrengsten per maand,279,1050,54,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,117,104,116,1,0,0,0,0,128,0,-1--1--1,,1|(152,1078)|
+1,118,96,116,1,0,0,0,0,128,0,-1--1--1,,1|(177,1149)|
+12,119,48,-321,1032,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,120,122,119,4,0,0,22,0,0,0,-1--1--1,,1|(-274,1031)|
+1,121,122,78,100,0,0,22,0,0,0,-1--1--1,,1|(-205,1031)|
+11,122,0,-231,1031,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,123,Kosten maken dranken,-231,1055,47,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,124,Gemiddelde kosten maken drinken,442,1032,62,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,125,124,123,1,0,0,0,0,128,0,-1--1--1,,1|(134,1200)|
+1,126,104,123,1,0,0,0,0,128,0,-1--1--1,,1|(-69,1141)|
+1,127,86,82,1,0,0,0,0,128,0,-1--1--1,,1|(-78,803)|
+10,128,Aantal kleine flessen gerycycled,93,656,65,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,129,128,86,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,131,27,1,4,0,0,22,0,0,0,-1--1--1,,1|(844,111)|
+1,132,28,5,1,0,0,0,0,128,0,-1--1--1,,1|(906,251)|
+10,133,Verkoopcijfers,651,227,48,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,134,133,28,1,0,0,0,0,128,0,-1--1--1,,1|(659,176)|
+10,135,Time,689,270,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,136,135,133,1,0,0,0,0,128,0,-1--1--1,,1|(667,252)|
+1,137,11,82,1,0,0,0,0,128,0,-1--1--1,,1|(316,918)|
+1,138,17,60,1,0,0,0,0,128,0,-1--1--1,,1|(1349,407)|
+1,139,28,104,1,0,0,0,0,128,0,-1--1--1,,1|(566,915)|
+10,141,Time,152,990,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,142,141,111,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,143,Time,1160,61,26,11,8,2,0,3,-1,0,0,0,128-128-128,0-0-0,|||128-128-128,0,0,0,0,0,0
+1,144,143,71,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+12,145,48,334,370,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,146,148,22,4,0,0,22,0,0,0,-1--1--1,,1|(334,293)|
+1,147,148,145,100,0,0,22,0,0,0,-1--1--1,,1|(334,343)|
+11,148,0,334,318,8,6,33,3,0,0,4,0,0,0,0,0,0,0,0,0
+10,149,synthese nieuw plastic,390,318,48,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,150,111,149,1,0,0,0,0,128,0,-1--1--1,,1|(465,756)|
+10,152,vraag nieuw plastic,347,463,59,11,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,153,152,149,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+10,154,gerecycled plastic per maand,-7,381,57,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,156,11,149,1,0,0,0,0,128,0,-1--1--1,,1|(494,340)|
+1,157,11,33,1,0,0,0,0,128,0,-1--1--1,,1|(212,508)|
+1,158,154,29,1,0,0,0,0,128,1,-1--1--1,,1|(165,317)|
+10,159,Doorlooptijd maken plastic fles,190,-36,42,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+10,161,aantal flessen geproduceerd uit plastic,492,154,76,19,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+12,163,48,197,107,10,8,0,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,165,167,21,4,0,0,22,0,0,0,-1--1--1,,1|(279,107)|
+1,166,167,163,100,0,0,22,0,0,0,-1--1--1,,1|(227,107)|
+11,167,0,253,107,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,168,plastic flessen geproduceerd,253,134,45,19,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,169,34,168,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,170,159,168,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,171,22,168,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,172,161,168,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
+1,173,71,6,1,0,0,0,0,128,0,-1--1--1,,1|(1317,356)|
+///---\\\
+:L<%^E!@
+1:current.vdfx
+4:Time
+5:Plastic flessen consument of milieu
+9:current
+19:70,0
+24:2000
+25:2050
+26:2050
+15:0,0,0,0,0,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:2
+41:0
+95:0
+96:0
+97:0
+77:0
+78:0
+102:0
+93:0
+94:0
+92:0
+91:0
+90:0
+87:0
+75:
+43:
+103:8,8,8,3,8
