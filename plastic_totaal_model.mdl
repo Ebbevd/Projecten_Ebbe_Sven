@@ -246,7 +246,7 @@ Omzet drank in plastic flessen= INTEG (
 	~		|
 
 Statiegeld fles gemiddeld=
-	0.4
+	0.25
 	~	Euro/Fles
 	~	https://www.rijksoverheid.nl/actueel/nieuws/2020/04/24/statiegeld-op-kleine\
 		-plastic-flesjes-voor-minder-zwerfafval
@@ -308,7 +308,7 @@ Gemiddelde tijd recyclen van plastic flesjes=
 	|
 
 levensduur flessen=
-	5/6
+	0.85714
 	~	Month
 	~	https://www.plasticsoupfoundation.org/2017/08/eindeloos-pet-recyclen-met-ioniqa-techn\
 		ologie/
@@ -507,15 +507,15 @@ $192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|255-255-255|96,9
 1,158,95,96,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
 1,159,101,96,0,0,0,0,0,128,0,-1--1--1,,1|(0,0)|
 1,160,96,6,1,0,0,0,0,128,0,-1--1--1,,1|(866,908)|
-10,162,initieel afval,1292,45,32,8,8,3,0,0,0,0,0,0,0,0,0,0,0,0
-1,163,162,39,1,0,0,0,0,128,1,-1--1--1,,1|(1301,89)|
+10,161,initieel afval,1292,45,32,8,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,162,161,39,1,0,0,0,0,128,1,-1--1--1,,1|(1301,89)|
 ///---\\\
 :L<%^E!@
-1:current2.vdfx
-1:current.vdfx
+1:gevoeligheid.vdfx
+1:base.vdfx
 4:Time
-5:Recycelen
-9:current2
+5:Plastic fles
+9:gevoeligheid
 19:70,0
 24:2017
 25:2050
